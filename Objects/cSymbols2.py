@@ -208,7 +208,6 @@ class cSymbol(rfx.cRESTconnect):
         print("cSymbols2-En GoRobot, recibiendo mensajes")
         print(self.getLastMsg())
 
-
     def getLastMsg(self):
         return self.msg
 
