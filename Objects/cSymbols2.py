@@ -205,8 +205,9 @@ class cSymbol(rfx.cRESTconnect):
 
     def goRobot(self):
         # Overridable Method
-        print("cSymbols2-En GoRobot, recibiendo mensajes")
-        print(self.getLastMsg())
+        #print("cSymbols2-En GoRobot, recibiendo mensajes")
+        #print(self.getLastMsg())
+        pass
 
     def getLastMsg(self):
         return self.msg
