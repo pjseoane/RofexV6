@@ -16,10 +16,12 @@ class cAlgoPrintMD(rb.cAlgoZero):
         tick1Offer = self.contractDetail[self.symbols[1]].getOfferPrice()
         tick1BidSize = self.contractDetail[self.symbols[1]].getBidSize()
         tick1OfferSize = self.contractDetail[self.symbols[1]].getOfferSize()
+        days=self.contractDetail[self.symbols[1]].getMaturityDate()#-self.contractDetail[self.symbols[0]].getMaturityDate()
 
         print(self.symbols[0], "Bid/Offer: ", tick0Bid ,"/",tick0Offer," ",tick0BidSize,tick0OfferSize)
         print(self.symbols[1], "Bid/Offer: ", tick1Bid ,"/",tick1Offer," ",tick1BidSize,tick1OfferSize)
         print("Pase:", tick1Bid/tick0Offer-1, tick1Offer/tick0Bid-1)
+        print("Days:",days)
 
         #print(self.contractDetail[1].getBidPrice())
 
