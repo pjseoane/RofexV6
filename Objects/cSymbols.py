@@ -1,4 +1,5 @@
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              from RofexConnect import cRESTconnect as rfx
+from RofexConnect import cRESTconnect as rfx
+
 
 
 class cSymbol(rfx.cRESTconnect):
