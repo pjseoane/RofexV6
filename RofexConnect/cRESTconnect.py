@@ -8,18 +8,21 @@ class cRESTconnect():
     def __init__(self, marketID):
 
         self.marketId= marketID
+
+    # *******Lectura de file de configuracion
         cpParser = configparser.RawConfigParser()
         cfgFile = r'..\Configuration\RofexV6.cfg'
 
         cpParser.read(cfgFile)
-
         self.activeEndpoint = cpParser.get('url', 'endpointDemo')
         self.wsEndPoint = cpParser.get('url', 'wsEndpointDemo')
         usr = cpParser.get('usr-credentials', 'usr')
         pswd = cpParser.get('usr-credentials', 'pswd')
 
         self.account = cpParser.get('usr-credentials', 'account')
+     # ***************************************
 
+     #******* Login *************************************************
         s = requests.Session()
         self.url = self.activeEndpoint + "auth/getToken"
         headers = {'X-Username': usr, 'X-Password': pswd}
@@ -29,7 +32,9 @@ class cRESTconnect():
             self.token = loginResponse.headers['X-Auth-Token']
         else:
             self.token = 0
+    # *************************************************************
 
+    # **** Servicios API Primary **********************************
     def getToken(self):
         return self.token
 
@@ -136,7 +141,7 @@ class cRESTconnect():
 
 if __name__ == '__main__':
 
-    RFXtoken=cRESTconnect('ROFX')
+    RFXtoken = cRESTconnect('ROFX')
     print("V6. Token:-->", RFXtoken.getToken())
 
 else:
