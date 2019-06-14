@@ -1,5 +1,5 @@
 from Objects import cMDsuscription as md
-from datetime import date
+from datetime import datetime
 from datetime import date
 
 
@@ -20,6 +20,16 @@ class cAlgoZero(md.cMDSuscription):
 
         delta = dates[1] - dates[0]
         return delta.days
+
+
+    def getTimestamp(self):
+        self.tstamp=self.getLastMsg()['timestamp']
+
+
+
+
+
+
 
 
 def goRobot(self):

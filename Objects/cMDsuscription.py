@@ -59,7 +59,7 @@ class cMDSuscription(rfx.cRESTconnect):
 
         # 'BI', 'OF', 'LA', 'OP', 'CL', 'SE', 'OI'
         return "{\"type\":\"" + self.type_ + "\",\"level\":" + self.level_ + \
-               ", \"entries\":[\"BI\", \"OF\",\"LA\"],\"products\":[{\"symbol\":\"" + \
+               ", \"entries\":[\"BI\", \"OF\",\"LA\",\"OP\",\"CL\",\"SE\",\"OI\"],\"products\":[{\"symbol\":\"" + \
                self.symbol + "\",\"marketId\":\"" + self.marketId + "\"}]}"
 
 
@@ -71,11 +71,12 @@ class cMDSuscription(rfx.cRESTconnect):
             msgType = self.msg['type'].upper()
 
             if msgType == 'MD':
+                #Gaurda el ultimo JSOn de md
                 self.tickerMsg = self.msg['instrumentId']['symbol']
                 self.marketDataDict[self.tickerMsg] = self.msg
 
                 if self.marketDataDict.__len__() == len(self.symbols):
-                    print("V6.cMDsuscription - Dict OK, New Msg")
+                    print("V6. cMDsuscription - Dict OK, New Msg")
                     try:
                         self.goRobot()
                     except:
@@ -110,6 +111,11 @@ class cMDSuscription(rfx.cRESTconnect):
 
     def getLastMsg(self):
         return self.msg
+
+    def getLastMDJSON(self, ticker):
+        return self.marketDataDict[ticker]
+
+
 
 
 if __name__ == '__main__':

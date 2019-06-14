@@ -8,7 +8,7 @@ class cAlgoPrintMD(rb.cAlgoZero):
 
 
     def goRobot(self):
-        print("***MD Dict length: ", self.marketDataDict.__len__(), self.getLastMsg())
+        print("***MD Dict length / msg : ", self.marketDataDict.__len__(), self.getLastMsg())
         tick0Bid=self.contractDetail[self.symbols[0]].getBidPrice()
         tick0Offer=self.contractDetail[self.symbols[0]].getOfferPrice()
         tick0BidSize=self.contractDetail[self.symbols[0]].getBidSize()
@@ -23,8 +23,10 @@ class cAlgoPrintMD(rb.cAlgoZero):
 
         print(self.symbols[0], "Bid/Offer: ", tick0Bid ,"/",tick0Offer," ",tick0BidSize,tick0OfferSize)
         print(self.symbols[1], "Bid/Offer: ", tick1Bid ,"/",tick1Offer," ",tick1BidSize,tick1OfferSize)
-        print("Days:",days,"Pase:",'{percent:.2%}'.format(percent=(tick1Bid/tick0Offer-1)/days*365), "/", '{percent:.2%}'.format(percent=(tick1Offer/tick0Bid-1)/days*365))
+        print("TimeStamp",self.getTimestamp(),"Days:",days,"Pase:",'{percent:.2%}'.format(percent=(tick1Bid/tick0Offer-1)/days*365), "/", '{percent:.2%}'.format(percent=(tick1Offer/tick0Bid-1)/days*365))
 
+        print("MD suscript Dict [0]-->",self.getLastMDJSON(self.symbols[0]))
+        print("MD suscript Dict [1]-->", self.getLastMDJSON(self.symbols[1]))
 
 
 if __name__ == '__main__':
