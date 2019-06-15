@@ -5,7 +5,7 @@ import simplejson
 
 class cRESTconnect():
 
-    def __init__(self, marketID):
+    def __init__(self, marketID="ROFX"):
 
         self.marketId= marketID
 
@@ -32,12 +32,11 @@ class cRESTconnect():
             self.token = loginResponse.headers['X-Auth-Token']
         else:
             self.token = 0
-    # *************************************************************
 
-    # **** Servicios API Primary **********************************
     def getToken(self):
         return self.token
 
+    #********* API Services **********************
     def retReq(self):
         headers = {'X-Auth-Token': self.getToken()}
         r = requests.get(self.url, headers=headers, verify=False)
@@ -76,7 +75,6 @@ class cRESTconnect():
                         cancelPrevious,
                         iceberg,
                         displayQty):
-
         self.url = self.activeEndpoint + "rest/order/newSingleOrder?marketId=" + marketId + "&symbol=" + symbol + "&price=" + price + "&orderQty=" + orderQty + "&ordType=" + ordType + "&side=" + side + "&timeInForce=" + timeInForce + "&account=" + account + "&cancelPrevious=" + cancelPrevious + "&iceberg=" + iceberg + "&displayQty=" + displayQty
         return self.retReq()
 
@@ -120,13 +118,7 @@ class cRESTconnect():
         self.url = self.activeEndpoint + "rest/order/byExecId?execId=" + execId
         return self.retReq()
 
-    # def getMarketData(self, marketId: str, symbol: str, p1: object, p2: object, p3: object, p4: object, p5: object,
-    #                   p6: object, p7: object, depth: object) -> object:
-    #     # parameters p1...p7 :"BI","OF","LA","OP","CL","SE","OI"
-    #     self.url = self.activeEndpoint + "rest/marketdata/get?marketId=" + marketId + "&symbol=" + symbol + "&entries=" + p1 + "," + p2 + "," + p3 + "," + p4 + "," + p5 + "," + p6 + "," + p7 + "&depth=" + depth
-    #     return self.retReq()
-
-    def getMarketData(self, marketId, symbol,depth):
+    def getMarketData(self, marketId, symbol, depth):
         self.url = self.activeEndpoint + "rest/marketdata/get?marketId=" + marketId + "&symbol=" + symbol + "&entries=BI,OF,LA,OP,CL,SE,OI&depth=" + depth
         return self.retReq()
 
@@ -141,8 +133,10 @@ class cRESTconnect():
 
 if __name__ == '__main__':
 
-    RFXtoken = cRESTconnect('ROFX')
-    print("V6. Token:-->", RFXtoken.getToken())
-
+    UsrLogin = cRESTconnect('ROFX')
+    print("V7. Token:-->", UsrLogin.getToken())
+    print("V7. Instruments", UsrLogin.instrumentos())
+    t1="RFX20Sep19"
+    print("V7. Instrument Detail:", UsrLogin.instrumentDetail(t1))
 else:
     pass
