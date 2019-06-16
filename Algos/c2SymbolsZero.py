@@ -66,8 +66,11 @@ class c2SymbolsZero(az.cAlgoZero):
             return 0
 
 
-def goRobot(self):
-    pass
+    def goRobot(self):
+        print ("Days Between:", self.getDaysBetween() )
+        for t in self.symbols:
+            self.printLine(t)
+
 
 
 if __name__ == '__main__':
@@ -76,9 +79,9 @@ if __name__ == '__main__':
     symbolsTuple = (t1, t2)
     c2S = c2SymbolsZero(symbolsTuple)
     print("v7. Algo2s")
-    print("Days Between:",c2S.getDaysBetween())
+    #print("Days Between:",c2S.getDaysBetween())
 
-    for t in symbolsTuple:
-        print(t, "Bid / Offer", c2S.getBidPrice(t),"/",c2S.getOfferPrice(t), c2S.getBidSize(t),"x",c2S.getOfferSize(t))
+    # for t in symbolsTuple:
+    #     print(t, "Bid / Offer", c2S.getBidPrice(t),"/",c2S.getOfferPrice(t), c2S.getBidSize(t),"x",c2S.getOfferSize(t))
 
     print("Spread ratio mkt:",c2S.getSpreadRatioBid(),"/", c2S.getSpreadRatioOffer(), c2S.getSpreadBidSize(),"x",c2S.getSpreadOfferSize())
