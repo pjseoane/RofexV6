@@ -85,8 +85,8 @@ class cMDSuscription(rfx.cRESTconnect):
                     try:
                         self.goRobot()
                     except:
-                        print("Problem in goRobot()")
-                        print("Dictionary", self.marketDataDict)
+                        print("V7. cMDSuscription Problem in goRobot()")
+                        print("V7. Dictionary lenght",self.marketDataDict.__len__(), self.marketDataDict)
 
             elif msgType == 'OR':
                 print("En Mensaje OR")
