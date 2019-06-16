@@ -3,16 +3,19 @@ import threading
 import simplejson
 
 from time import sleep
+from datetime import datetime
 from RofexConnect import cRESTconnect as rfx
+from RofexConnect import cMSGparser as mp
+
 #from Objects import cSymbols
 
 
 class cMDSuscription(rfx.cRESTconnect):
 
-    def __init__(self, symbols, marketID='ROFX',type_="smd", level_="1"):
+    def __init__(self, symbolsTuple, marketID='ROFX',type_="smd", level_="1"):
 
         super().__init__(marketID)
-        self.symbols = symbols
+        self.symbols = symbolsTuple
         self.numMessages = 0
         self.type_ = type_
         self.level_= level_
@@ -22,7 +25,7 @@ class cMDSuscription(rfx.cRESTconnect):
         self.marketDataDict = {}
         self.contractDetail = {}
         self.marketCloseData = {}
-        self.symbol=""
+        self.sym=""
 
     #def suscribeMD(self):
         headers = {'X-Auth-Token:{token}'.format(token=self.token)}
@@ -115,48 +118,60 @@ class cMDSuscription(rfx.cRESTconnect):
     def getLastMsg(self):
         return self.msg
 
+
     #*********** contract details parsers ***************
 
     def getContractMultiplier(self, ticker):
-        return self.contractDetail[ticker]['instrument']['contractMultiplier']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getContractMultiplier()
 
     def getContractLowLimit(self, ticker):
-        return self.contractDetail[ticker]['instrument']['lowLimitPrice']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getContractLowLimit()
 
     def getContractHighLimit(self, ticker):
-        return self.contractDetail[ticker]['instrument']['highLimitPrice']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getContractHighLimit()
 
     def getContractMinPriceIncrement(self, ticker):
-        return self.contractDetail[ticker]['instrument']['minPriceIncrement']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getContractMinPriceIncrement()
 
     def getMaturityDate(self, ticker):
-        return self.contractDetail[ticker]['instrument']['maturityDate']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getMaturityDate()
 
     def getCficode(self, ticker):
-        return self.contractDetail[ticker]['instrument']['cficode']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getCficode()
 
     def getCurrency(self, ticker):
-        return self.contractDetail[ticker]['instrument']['currency']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getCurrency()
 
     def getMarketSegmentId(self, ticker):
-        return self.contractDetail[ticker]['instrument']['segment']['marketSegmentId']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getMarketSegmentId()
 
     def getPriceConvertionFactor(self, ticker):
-        return self.contractDetail[ticker]['instrument']['priceConvertionFactor']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getPriceConvertionFactor()
 
     def getRoundLot(self, ticker):
-        return self.contractDetail[ticker]['instrument']['roundLot']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getRoundLot()
 
     def getTickSize(self, ticker):
-        return self.contractDetail[ticker]['instrument']['tickSize']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getTickSize()
 
     def getMinTradeVol(self, ticker):
-        return self.contractDetail[ticker]['instrument']['minTradeVol']
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getMinTradeVol()
 
     def getMaxTradeVol(self, ticker):
-        return self.contractDetail[ticker]['instrument']['maxTradeVol']
-
-
+        m = mp.cMDparser(self.contractDetail[ticker])
+        return m.getMaxTradeVol()
 
     # ********* market data parsers ****************
     def getLastMsgTicker(self, ticker):
@@ -165,58 +180,44 @@ class cMDSuscription(rfx.cRESTconnect):
     def getFullMD(self, ticker, depth):
         return self.getMarketData(self.marketId, ticker, depth)
 
-    def getBidPrice(self, ticker):
-        try:
-            m = self.marketDataDict[ticker]['marketData']['BI'][0]['price']
-        except:
-            m = 0
-        return m
+    # def buildParser(self,ticker):
+    #     return mp.cMDparser(self.marketDataDict[ticker])
 
-    def getBidSize(self, ticker) -> int:
-        try:
-            m = self.marketDataDict[ticker]['marketData']['BI'][0]['size']
-        except:
-            m = 0
-        return m
+    def getBidPrice(self, ticker):
+        m=mp.cMDparser(self.marketDataDict[ticker])
+        return m.getBidPrice()
 
     def getOfferPrice(self, ticker):
-        try:
-            m = self.marketDataDict[ticker]['marketData']['OF'][0]['price']
-        except:
-            m = 0
-        return m
+        m = mp.cMDparser(self.marketDataDict[ticker])
+        return m.getOfferPrice()
+
+    def getBidSize(self, ticker) -> int:
+        m=mp.cMDparser(self.marketDataDict[ticker])
+        return m.getBidSize()
 
     def getOfferSize(self, ticker)-> int:
-        try:
-            m = self.marketDataDict[ticker]['marketData']['OF'][0]['size']
-        except:
-            m = 0
-        return m
+        m = mp.cMDparser(self.marketDataDict[ticker])
+        return m.getOfferSize()
 
-    def getTimestamp(self, ticker):
-        return self.marketDataDict[ticker]['timestamp']
+    def getTimestamp(self,ticker):
+        m = mp.cMDparser(self.marketDataDict[ticker])
+        return datetime.fromtimestamp(m.getTimestamp()/1000.0)
+
 
     def getLastPrice(self, ticker):
-        try:
-            m = self.marketCloseData[ticker]['marketData']['LA']['price']
-        except:
-            m = 0
-        return m
+        m = mp.cMDparser(self.marketDataDict[ticker])
+        return m.getLastPrice()
 
     def getClosePrice(self, ticker):
-        try:
-            m = self.marketCloseData[ticker]['marketData']['CL']['price']
-        except:
-            m = 0
-        return m
+        m = mp.cMDparser(self.marketDataDict[ticker])
+        return m.getClosePrice()
 
     def getOpenInterest(self, ticker):
-        try:
-            m = self.marketCloseData[ticker]['marketData']['OI']['size']
-        except:
-            m = 0
-        return m
+        m = mp.cMDparser(self.marketDataDict[ticker])
+        return m.getOpenInterest()
 
+    def getLatency(self, ticker):
+        return datetime.now()-self.getTimestamp(ticker)
 
 
 if __name__ == '__main__':
@@ -229,13 +230,15 @@ if __name__ == '__main__':
     contratos = (t1, t2,t3)
     md1 = cMDSuscription(contratos)
 
+    #test funciones
+    for t in contratos:
+        print("Ticker:", t)
+        print("Contract Details     :", t, md1.instrumentDetail(t))
+        print("Contract Multiplier  :", t, md1.getContractMultiplier(t))
+        print("Contract Low Limit Price:", t, md1.getContractLowLimit(t))
+        print("Maturity Date:",t, md1.getMaturityDate(t))
 
-    print("Ticker:", t1)
-    print("Contract Details     :", t1, md1.instrumentDetail(t1))
-    print("Contract Multiplier  :", t1, md1.getContractMultiplier(t1))
-    print("Contract Low Limit Price:", t1, md1.getContractLowLimit(t1))
-    print(t1," ", md1.getBidPrice(t1),"/",md1.getOfferPrice(t1),md1.getBidSize(t1),"/", md1.getOfferSize(t1),"/","timestamp:",md1.getTimestamp(t1))
-    print(t2," ", md1.getBidPrice(t2),"/",md1.getOfferPrice(t2),md1.getBidSize(t2),"/", md1.getOfferSize(t2),"/","timestamp:",md1.getTimestamp(t2))
-    print(t3, " ", md1.getBidPrice(t3), "/", md1.getOfferPrice(t3), md1.getBidSize(t3), "/", md1.getOfferSize(t3), "/","timestamp:", md1.getTimestamp(t3))
+        print(t," ", md1.getBidPrice(t),"/",md1.getOfferPrice(t),"Size:", md1.getBidSize(t),"-", md1.getOfferSize(t),"/","timestamp:",md1.getTimestamp(t), "Latency:",md1.getLatency(t))
+
 
 
