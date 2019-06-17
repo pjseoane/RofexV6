@@ -22,11 +22,9 @@ class c2SymbolsPase(a2.c2SymbolsZero):
             self.printLine(t)
 
 
-
-
 if __name__ == '__main__':
-    ticker1 = "RFX20Jun19"
-    ticker2 = "RFX20Sep19"
+    ticker1 = "DOJun19"
+    ticker2 = "RFX20Jun19"
 
     tuple = (ticker1, ticker2)
     pase = c2SymbolsPase(tuple)

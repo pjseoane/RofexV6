@@ -6,8 +6,8 @@ class cAlgoZero(md.cMDSuscription):
 
     def __init__(self, symbols, mktID="ROFX", algoName="Z-Robot"):
 
-        super().__init__(symbols, mktID)
-        self.algoName=algoName
+        super().__init__(symbols, mktID,algoName)
+
 
     def goRobot(self):
         lm=self.getLastMsg()

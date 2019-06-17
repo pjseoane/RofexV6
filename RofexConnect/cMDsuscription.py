@@ -7,16 +7,17 @@ from datetime import datetime
 from RofexConnect import cRESTconnect as rfx
 from RofexConnect import cMSGparser as mp
 
-#from Objects import cSymbols
+#from Test import cSymbols
 
 
 class cMDSuscription(rfx.cRESTconnect):
 
-    def __init__(self, symbolsTuple, marketID='ROFX',type_="smd", level_="1"):
+    def __init__(self, symbolsTuple, marketID='ROFX',algoName="cMDSuscription",type_="smd", level_="1"):
 
         super().__init__(marketID)
         self.symbols = symbolsTuple
         self.numMessages = 0
+        self.algoName=algoName
         self.type_ = type_
         self.level_= level_
         self.msg=""
@@ -219,6 +220,11 @@ class cMDSuscription(rfx.cRESTconnect):
     def getLatency(self, ticker):
         return datetime.now()-self.getTimestamp(ticker)
 
+#**************************
+#ideas form Intereactive Brokers
+
+#data.current(security,fields)
+#print(data.current(context.secutity,'price))
 
 if __name__ == '__main__':
     print("V7. Class cMDsuscription")
