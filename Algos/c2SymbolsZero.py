@@ -13,6 +13,7 @@ class c2SymbolsZero(az.cAlgoZero):
         print(ticker, "Bid / Offer", self.getBidPrice(ticker), "/", self.getOfferPrice(ticker), self.getBidSize(ticker), "x",
               self.getOfferSize(ticker))
 
+
     def getDaysBetween(self):
         d0 = self.getMaturityDate(self.symbols[0])
         d1 = self.getMaturityDate(self.symbols[1])
@@ -26,10 +27,10 @@ class c2SymbolsZero(az.cAlgoZero):
             return 0
 
     def getPaseOffer(self):
-        return self.getSpreadRatioOffer()*1/self.getDaysBetween() * 365
+        return (self.getSpreadRatioOffer()-1)/self.getDaysBetween() * 365
 
     def getPaseBid(self):
-        return self.getSpreadRatioBid() * 1 / self.getDaysBetween() * 365
+        return (self.getSpreadRatioBid() - 1) / self.getDaysBetween() * 365
 
     def getSpreadRatioBid(self):
         try:
@@ -70,11 +71,14 @@ class c2SymbolsZero(az.cAlgoZero):
         for t in self.symbols:
             self.printLine(t)
 
+        print("Spread ratio mkt:", self.getSpreadRatioBid(), "/", self.getSpreadRatioOffer(), self.getSpreadBidSize(),
+              "x", self.getSpreadOfferSize())
+
 
 if __name__ == '__main__':
-    t1 = "DOSep19"
-    t2 = "RFX20Sep19"
+    t1 = "DOJun19"
+    t2 = "RFX20Jun19"
     symbolsTuple = (t1, t2)
     c2S = c2SymbolsZero(symbolsTuple,"ROFX","c2SymbolsZ")
 
-    print("Spread ratio mkt:",c2S.getSpreadRatioBid(),"/", c2S.getSpreadRatioOffer(), c2S.getSpreadBidSize(),"x",c2S.getSpreadOfferSize())
+    #print("Spread ratio mkt:",c2S.getSpreadRatioBid(),"/", c2S.getSpreadRatioOffer(), c2S.getSpreadBidSize(),"x",c2S.getSpreadOfferSize())
