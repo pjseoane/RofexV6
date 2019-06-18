@@ -40,7 +40,8 @@ class c2SymbolsPase(a2.c2SymbolsZero):
         for t in self.symbols:
             self.printLine(t)
         print("in goRobot() c2SymbolsPase")
-        print("Pase:",'{percent:.2%}'.format(percent=self.getPaseBid()),"/", '{percent:.2%}'.format(percent=self.getPaseOffer()))
+        print("Pase:",'{percent:.2%}'.format(percent=self.getPaseBid()),"/", '{percent:.2%}'.format(percent=self.getPaseOffer()),self.getSpreadBidSize(),
+              "x", self.getSpreadOfferSize())
 
 
 if __name__ == '__main__':

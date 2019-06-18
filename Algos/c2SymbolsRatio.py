@@ -26,5 +26,5 @@ if __name__ == '__main__':
     ticker1 = "DOJun19"
     ticker2 = "RFX20Jun19"
 
-    tuple = (ticker1, ticker2)
-    pase = c2SymbolsPase(tuple)
+    tickers = (ticker1, ticker2)
+    pase = c2SymbolsPase(tickers)
