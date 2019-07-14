@@ -11,7 +11,7 @@ class cRESTconnect():
 
     # *******Lectura de file de configuracion
         cpParser = configparser.RawConfigParser()
-        cfgFile = r'..\Configuration\RofexV6.cfg'
+        cfgFile = r'../Configuration/RofexV6.cfg'
 
         cpParser.read(cfgFile)
         self.activeEndpoint = cpParser.get('url', 'endpointDemo')
@@ -136,7 +136,7 @@ if __name__ == '__main__':
     UsrLogin = cRESTconnect('ROFX')
     print("V7. Token:-->", UsrLogin.getToken())
     print("V7. Instruments", UsrLogin.instrumentos())
-    t1="RFX20Sep19"
+    t1="DOSep19"
     print("V7. Instrument Detail:", UsrLogin.instrumentDetail(t1))
 else:
     pass

@@ -66,7 +66,6 @@ class cMDSuscription(rfx.cRESTconnect):
                ", \"entries\":[\"BI\", \"OF\",\"LA\",\"OP\",\"CL\",\"SE\",\"OI\"],\"products\":[{\"symbol\":\"" + \
                self.sym + "\",\"marketId\":\"" + self.marketId + "\"}]}"
 
-
     def on_message(self, message):
 
         self.numMessages += 1
@@ -229,11 +228,11 @@ class cMDSuscription(rfx.cRESTconnect):
 if __name__ == '__main__':
     print("V7. Class cMDsuscription")
 
-    t1 = "DOJun19"
-    t2 = "RFX20Jun19"
-    t3 = "RFX20Sep19"
+    t1 = "DOSep19"
+    t2 = "RFX20Sep19"
+    # t3 = "RFX20Sep19"
 
-    contratos = (t1, t2,t3)
+    contratos = (t1, t2)
     md1 = cMDSuscription(contratos)
 
     #test funciones
