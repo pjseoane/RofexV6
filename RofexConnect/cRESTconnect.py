@@ -25,6 +25,7 @@ class cRESTconnect():
      #******* Login *************************************************
         s = requests.Session()
         self.url = self.activeEndpoint + "auth/getToken"
+        print("url: ",self.url);
         headers = {'X-Username': usr, 'X-Password': pswd}
         loginResponse = s.post(self.url, headers=headers, verify=False)
 
@@ -134,6 +135,7 @@ class cRESTconnect():
 if __name__ == '__main__':
 
     UsrLogin = cRESTconnect('ROFX')
+
     print("V7. Token:-->", UsrLogin.getToken())
     print("V7. Instruments", UsrLogin.instrumentos())
     t1="DOSep19"

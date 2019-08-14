@@ -45,7 +45,7 @@ class c2SymbolsPase(a2.c2SymbolsZero):
 
 
 if __name__ == '__main__':
-    ticker1 = "RFX20Jun19"
+    ticker1 = "DOSep19"
     ticker2 = "RFX20Sep19"
 
     tickers = (ticker1, ticker2)
